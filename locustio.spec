@@ -4,7 +4,7 @@
 #
 Name     : locustio
 Version  : 0.9.0
-Release  : 11
+Release  : 12
 URL      : https://files.pythonhosted.org/packages/e6/88/2d56405c715df8c4c94850857c581007d39fe50dfe9dbcac91e378a8f24f/locustio-0.9.0.tar.gz
 Source0  : https://files.pythonhosted.org/packages/e6/88/2d56405c715df8c4c94850857c581007d39fe50dfe9dbcac91e378a8f24f/locustio-0.9.0.tar.gz
 Summary  : Website load testing framework
@@ -60,6 +60,7 @@ python3 components for the locustio package.
 
 %prep
 %setup -q -n locustio-0.9.0
+cd %{_builddir}/locustio-0.9.0
 %patch1 -p1
 
 %build
@@ -67,7 +68,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568876251
+export SOURCE_DATE_EPOCH=1576011717
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -80,7 +81,7 @@ python3 setup.py build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
+PYTHONPATH=%{buildroot}$(python -c "import sys; print(sys.path[-1])") python setup.py test
 %install
 export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
